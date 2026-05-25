@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Udarata Tea | The Breath of Misty Mountains</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --mist-silver: #e0e4e5;
+            --wa-green: #2ecc71;
+            --deep-forest: #1b262c;
+            --soft-white: rgba(255, 255, 255, 0.85);
+            --glass-mist: rgba(255, 255, 255, 0.05);
+            --transition: all 0.8s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: #0d1117; 
+            color: var(--soft-white); 
+            overflow-x: hidden;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        /* රන්වන් පැහැති තිත් සඳහා Style */
+        #sparkles-container {
+            position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; pointer-events: none;
+        }
+        .sparkle {
+            position: absolute; background: #ffcc00; border-radius: 50%;
+            opacity: 0.6; animation: moveUp 8s linear infinite;
+        }
+        @keyframes moveUp {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+
+        /* Taskbar සම්පූර්ණයෙන්ම Transparent කර ඇත */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 10px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: transparent; 
+            transition: 0.5s; z-index: 1000;
+        }
+        nav.scrolled {
+            background: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(15px);
+            padding: 5px 5%;
+        }
+
+        .logo-wrap { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-wrap img { width: 120px; filter: drop-shadow(0 0 10px white); }
+        .logo-wrap span { font-family: 'Cinzel', serif; color: white; font-weight: 700; font-size: 0rem; letter-spacing: 3px; }
+        
+        nav ul { display: flex; gap: 30px; list-style: none; }
+        nav ul li a { text-decoration: none; color: #fff; font-size: 0.9rem; font-weight: 400; text-transform: uppercase; transition: 0.3s; }
+        nav ul li a:hover { color: var(--wa-green); text-shadow: 0 0 10px white; }
+
+        .lang-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 14px; border-radius: 50px; cursor: pointer; font-size: 0.75rem; transition: 0.3s; }
+        .lang-btn.active { background: white; color: black; }
+
+        /* Background Slideshow */
+        .slideshow-container { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -5; overflow: hidden; }
+        .slide { position: absolute; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; animation: slideshowAnim 24s infinite; }
+        .slide::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(13,17,23,0.3), rgba(13,17,23,0.9)); }
+        
+        .slide:nth-child(1) { background-image: url('file:///D:/ICT/UP_COUNTRY_TEA_WEBSITE/IMG_20260525_174906.jpg'); animation-delay: 0s;}
+        .slide:nth-child(2) { background-image: url('file:///D:/ICT/UP_COUNTRY_TEA_WEBSITE/arindam-saha-PwzISwC2kLs-unsplash.jpg'); animation-delay: 6s;}
+        .slide:nth-child(3) { background-image: url('file:///D:/ICT/UP_COUNTRY_TEA_WEBSITE/Screenshot_2026-05-25-17-32-54-47_96b26121e545231a3c569311a54cda96.jpg'); animation-delay: 12s;}
+        .slide:nth-child(4) { background-image: url('file:///D:/ICT/UP_COUNTRY_TEA_WEBSITE/IMG_20260525_174928.jpg'); animation-delay: 18s;}
+
+        @keyframes slideshowAnim { 0% { opacity: 0; } 10% { opacity: 1; } 25% { opacity: 1; } 35% { opacity: 0; } 100% { opacity: 0; } }
+
+        section { padding: 160px 10% 80px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+        .glass-box { background: var(--glass-mist); border: 1px solid rgba(255,255,255,0.1); padding: 50px; border-radius: 40px; backdrop-filter: blur(20px); box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+        
+        h1 { font-family: 'Cinzel', serif; font-size: 5rem; color: white; margin-bottom: 20px; line-height: 1.1; font-weight: 400; text-shadow: 0 0 20px rgba(255,255,255,0.3); }
+        h2 { font-family: 'Cinzel', serif; font-size: 3rem; margin-bottom: 30px; text-align: center; font-weight: 400; }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin: 50px 0; }
+        .stat-card { text-align: center; padding: 30px; background: rgba(255,255,255,0.03); border-radius: 30px; border: 1px solid rgba(255,255,255,0.05); }
+        .stat-card i { font-size: 2.5rem; color: var(--wa-green); margin-bottom: 15px; }
+        .stat-num { font-size: 2.5rem; font-weight: 700; display: block; margin-bottom: 5px; }
+
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; margin-top: 50px; }
+        .product-card { background: rgba(255,255,255,0.03); padding: 25px; border-radius: 35px; border: 1px solid rgba(255,255,255,0.1); text-align: center; transition: 0.5s; position: relative; }
+        .product-card:hover { transform: translateY(-15px); background: rgba(255,255,255,0.08); border-color: var(--wa-green); }
+        .product-card img { width: 100%; border-radius: 25px; margin-bottom: 20px; }
+
+        .tag { position: absolute; top: 20px; right: 20px; padding: 5px 15px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; }
+        .in { background: var(--wa-green); color: black; }
+        .out { background: #e74c3c; color: white; }
+
+        .btn-green { background: var(--wa-green); color: black; padding: 15px 30px; text-decoration: none; border-radius: 50px; font-weight: 700; display: inline-flex; align-items: center; gap: 10px; width: 100%; justify-content: center; transition: 0.3s; }
+        .btn-green:hover { background: white; box-shadow: 0 0 20px var(--wa-green); }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: var(--transition); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        footer { text-align: center; padding: 60px; background: rgba(13,17,23,0.95); border-top: 1px solid rgba(255,255,255,0.05); }
+
+        @media (max-width: 768px) { h1 { font-size: 2.5rem; } nav ul { display: none; } }
+    </style>
+</head>
+<body>
+
+    <div id="sparkles-container"></div>
+
+    <div class="slideshow-container"><div class="slide"></div><div class="slide"></div><div class="slide"></div><div class="slide"></div></div>
+
+    <nav id="navbar">
+        <a href="#" class="logo-wrap">
+            <img src="file:///D:/ICT/UP_COUNTRY_TEA_WEBSITE/file_00000000d20472078f205170becce3bc-removebg-preview.png" alt="Logo">
+            <span>UDARATA</span>
+        </a>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <ul>
+                <li><a href="#home" class="lang-target" data-en="Home" data-si="මුල් පිටුව" data-ta="முகப்பு">Home</a></li>
+                <li><a href="#history" class="lang-target" data-en="Serenity" data-si="නිස්කලංක බව" data-ta="அமைதி">Serenity</a></li>
+                <li><a href="#collection" class="lang-target" data-en="Our Tea" data-si="අපේ තේ" data-ta="எங்கள் தேயிலை">Our Tea</a></li>
+            </ul>
+            <div class="lang-switcher">
+                <button class="lang-btn active" onclick="updateLanguage('en', this)">EN</button>
+                <button class="lang-btn" onclick="updateLanguage('si', this)">SI</button>
+                <button class="lang-btn" onclick="updateLanguage('ta', this)">TA</button>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home">
+        <div class="reveal">
+            <h1 class="lang-target" data-en="Breath of the<br><span>Misty Highlands</span>" data-si="මීදුම් කඳුයායේ<br><span>සිහිල් හුස්ම</span>" data-ta="பனி மலைகளின் சுவாசம்">Breath of the<br><span>Misty Highlands</span></h1>
+            <p class="lang-target" style="max-width: 600px; font-size: 1.3rem; font-weight: 300;" data-en="Escape the noise. Feel the cool breeze of Nuwara Eliya in every sip of our handpicked, pure mountain tea." data-si="නුවරඑළියේ සීතල මීදුම අතරින් නෙලාගත් පිරිසිදු තේ දල්ලක නිස්කලංක රසය. කාර්යබහුල ලෝකයෙන් මොහොතකට සමුගෙන නිදහස විඳින්න." data-ta="சத்தத்திலிருந்து தப்பிக்க.">Escape the noise. Feel the cool breeze of Nuwara Eliya.</p>
+            <br>
+            <a href="#collection" class="btn-green lang-target" style="width: auto; padding: 15px 40px;" data-en="DISCOVER FRESHNESS" data-si="නැවුම් බව විඳින්න" data-ta="புத்துணர்ச்சியைக் கண்டறியவும்">DISCOVER FRESHNESS</a>
+        </div>
+    </section>
+
+    <section id="stats" style="min-height: auto;">
+        <div class="stats-grid reveal">
+            <div class="stat-card">
+                <i class="fas fa-heart"></i>
+                <span class="stat-num">10,000+</span>
+                <span class="lang-target" data-en="Tea Lovers" data-si="තේ රසිකයින්" data-ta="வாடிக்கையாளர்கள்">Tea Lovers</span>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-cloud-rain"></i>
+                <span class="stat-num">Fresh</span>
+                <span class="lang-target" data-en="Rain-Fed Leaves" data-si="වැස්සෙන් පෝෂණය වූ" data-ta="மழை நீர்">Rain-Fed Leaves</span>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-wind"></i>
+                <span class="stat-num">Pure</span>
+                <span class="lang-target" data-en="Mountain Air" data-si="කඳුකර වාතය" data-ta="தூய காற்று">Mountain Air</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="history">
+        <div class="glass-box reveal">
+            <h2 class="lang-target" data-en="The Sound of Silence" data-si="නිහඬතාවයේ හඬ" data-ta="அமைதியின் குரல்">The Sound of Silence</h2>
+            <p class="lang-target" data-en="In the high peaks of Nuwara Eliya, where the mist kisses the tea buds at dawn, we find our peace. Our journey is not about royalty, but about the freedom of nature. Every leaf is nurtured by the cool Sri Lankan rain and the silent mountain winds." data-si="නුවරඑළියේ උසම කඳු මුදුන් වල, මීදුම තේ දලු සිපගන්නා අලුයම යාමයේ අපේ තේ උපත ලබයි. මෙය රාජකීයත්වයට වඩා සොබාදහමේ නිදහස සහ සැනසීම සොයා යන ගමනකි. වැස්සෙන් සහ සීතල සුළඟින් පෝෂණය වූ ඒ නැවුම් රසය ඔබ වෙත ගෙන එන්නෙමු." data-ta="நுவரெலியாவின் உயர்ந்த சிகரங்களில்...">In the high peaks of Nuwara Eliya, where the mist kisses the tea buds at dawn, we find our peace.</p>
+        </div>
+    </section>
+
+    <section id="collection">
+        <h2 class="reveal lang-target" data-en="Our Pure Selection" data-si="අපේ නැවුම් තේ එකතුව" data-ta="எங்கள் தேர்வு">Our Pure Selection</h2>
+        <div class="product-grid">
+            <div class="product-card reveal">
+                <span class="tag in">IN STOCK</span>
+                <img src="https://images.unsplash.com/photo-1597318181409-cf64d0b5d8a2?w=400" alt="Tea">
+                <h3>Highland Mist Black</h3>
+                <a href="https://wa.me/94704388631" class="btn-green">WhatsApp Order</a>
+            </div>
+            <div class="product-card reveal">
+                <span class="tag in">IN STOCK</span>
+                <img src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=400" alt="Tea">
+                <h3>Silver Rain Buds</h3>
+                <a href="https://wa.me/94704388631" class="btn-green">WhatsApp Order</a>
+            </div>
+            <div class="product-card reveal">
+                <span class="tag out">OUT STOCK</span>
+                <img src="https://images.unsplash.com/photo-1515823064-d6e0c04616a7?w=400" alt="Tea">
+                <h3>Emerald Breeze</h3>
+                <a href="https://wa.me/94704388631" class="btn-green">WhatsApp Order</a>
+            </div>
+             <div class="product-card reveal">
+                <span class="tag in">IN STOCK</span>
+                <img src="https://images.unsplash.com/photo-1594631252845-29fc4586bc5c?w=400" alt="Tea">
+                <h3>Cool Jasmine</h3>
+                <a href="https://wa.me/94704388631" class="btn-green">WhatsApp Order</a>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <p class="lang-target" data-en="Contact: 070 376 8437 | Experience the Serenity" data-si="දුරකථන: 070 376 8437 | නිස්කලංක බව විඳින්න" data-ta="தொடர்பு: 070 376 8437">Contact: 070 376 8437 | Experience the Serenity</p>
+        <p style="margin-top: 10px; font-size: 0.7rem; opacity: 0.5;">© 2026 UDARATA TEA - BEYOND THE MIST</p>
+    </footer>
+
+    <script>
+        // රන්වන් තිත් ජනනය කිරීමේ කේතය
+        const sparkleContainer = document.getElementById('sparkles-container');
+        for (let i = 0; i < 40; i++) {
+            let sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            let size = Math.random() * 5 + 2;
+            sparkle.style.width = size + 'px';
+            sparkle.style.height = size + 'px';
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            sparkle.style.animationDelay = Math.random() * 5 + 's';
+            sparkleContainer.appendChild(sparkle);
+        }
+
+        // Navbar scroll effect
+        window.onscroll = function() {
+            var nav = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                nav.classList.add("scrolled");
+            } else {
+                nav.classList.remove("scrolled");
+            }
+
+            // Reveal animations
+            document.querySelectorAll(".reveal").forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 50) {
+                    el.classList.add("active");
+                }
+            });
+        };
+
+        function updateLanguage(lang, btn) {
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.lang-target').forEach(el => {
+                el.innerHTML = el.getAttribute(`data-${lang}`);
+            });
+        }
+    </script>
+</body>
+</html>
